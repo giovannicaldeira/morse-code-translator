@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Morse Code Translator</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/socket.io.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+  </head>
+  <body>
+    
+    <!-- <form action="" method="POST">
+      <input type="text" placeholder="Morse code"/>
+      <input class="btn btn-primary"  type="submit" value="Translate"/>
+    </form> -->
+
+    <di class="translate">
+      <form class="row g-3" action="" method="POST">
+        <div class="col-auto">
+          <input type="text" class="form-control" id="morseMessage" placeholder="Morse message">
+        </div>
+        <div class="col-auto">
+          <input class="btn btn-primary" type="submit" value="Translate"/>
+        </div>
+      </form>  
+      
+      <label for="translatedMessage">Translated message:</label>
+      <div id="translatedMessage"></div>
+    </div>
+
+    <script type="text/javascript">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      socket.on( 'connect', function() {
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          let text_input = $( '#morseMessage' ).val()
+          socket.emit( 'translate', {
+            text : text_input
+          } )
+        } )
+      } )
+      
+      socket.on( 'response', function( msg ) {
+        if( typeof msg.text !== 'undefined' ) {
+          $( '#translatedMessage' ).html( '<div><b style="color: #000">'+msg.text+'</b></div>' )
+        }
+      })
+
+    </script>
+
+  </body>
+</html>
