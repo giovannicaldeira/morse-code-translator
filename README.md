@@ -77,3 +77,17 @@ Stoping application
 ```shell
     make docker/down
 ```
+
+## How to test
+
+Execute the following commands:
+```shell
+    make docker/build
+    make docker/up
+```
+
+After this you can access the translator on: `http://localhost:5001/`
+
+Use one blank space to separate letters and two blank spaces to separate words. For example:
+
+```--- .-.. .-  -- ..- -. -.. ---```
